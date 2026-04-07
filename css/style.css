@@ -28,7 +28,8 @@ a {
 /* ── Loading Spinner ─────────────────────────────────────────
    Used on the convert button and the preview modal overlay.    */
 .spinner {
-  display: inline-block;
+  /* display is managed via JS style.display to avoid Tailwind v4 layer
+     specificity conflict (unlayered rules beat layered .hidden utility). */
   animation: spin 0.7s linear infinite;
 }
 
