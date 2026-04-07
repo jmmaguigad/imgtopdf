@@ -1,0 +1,214 @@
+/* ============================================================
+   ImgToPDF — Custom Styles
+   Complements Tailwind CSS v4 Play CDN.
+   Handles: animations, transitions, SortableJS states,
+            scrollbar styling, spinner, modal backdrop.
+   ============================================================ */
+
+/* ── Smooth dark-mode transitions ────────────────────────────
+   Applied globally so colour changes animate instead of snap.  */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Exclude interactive elements from the blanket colour transition
+   so hover/focus feedback remains snappy.                       */
+button,
+input,
+select,
+a {
+  transition-property: background-color, border-color, color, box-shadow, transform, opacity;
+  transition-duration: 150ms;
+}
+
+/* ── Loading Spinner ─────────────────────────────────────────
+   Used on the convert button and the preview modal overlay.    */
+.spinner {
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Drop Zone: drag-over state animation ────────────────────
+   The 'drag-over' class is toggled by JS on dragover/dragleave.
+   The Tailwind @layer utility in index.html sets the colours;
+   this adds a pulsing border glow effect.                      */
+#dropZone {
+  transition: transform 180ms ease, border-color 180ms ease,
+              background-color 180ms ease, box-shadow 180ms ease;
+}
+
+#dropZone.drag-over {
+  box-shadow: 0 0 0 4px rgba(47, 149, 245, 0.25);
+}
+
+/* ── Image Cards ─────────────────────────────────────────────
+   card-hover utility is defined in Tailwind @layer.
+   This extends it with a subtle box-shadow lift.               */
+.card-hover:hover {
+  box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.18);
+}
+
+/* Dark mode card hover */
+.dark .card-hover:hover {
+  box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.55);
+}
+
+/* ── SortableJS States ───────────────────────────────────────
+   Classes injected by SortableJS during drag operations.       */
+
+/* The placeholder "ghost" card shown at the drop target */
+.sortable-ghost {
+  opacity: 0.35;
+  border: 2px dashed #2f95f5 !important;
+  background-color: rgba(47, 149, 245, 0.06) !important;
+}
+
+/* The card being actively dragged */
+.sortable-drag {
+  opacity: 0.95;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.35) !important;
+  transform: scale(1.04) rotate(1.5deg);
+  cursor: grabbing !important;
+  z-index: 999;
+}
+
+/* The chosen card (after mousedown, before drag starts) */
+.sortable-chosen {
+  box-shadow: 0 4px 16px -4px rgba(47, 149, 245, 0.4) !important;
+}
+
+/* ── PDF Preview Modal Backdrop ──────────────────────────────
+   The modal #pdfModal uses Tailwind classes for most styling;
+   this adds a fade-in animation for the backdrop.              */
+#pdfModal {
+  animation: fadeIn 180ms ease;
+}
+
+#pdfModal.hidden {
+  animation: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Custom Scrollbar (WebKit) ───────────────────────────────
+   Subtle scrollbar to match the design language.               */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.5); /* slate-400 @50% */
+  border-radius: 99px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.7); /* slate-500 @70% */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(71, 85, 105, 0.6); /* slate-600 @60% */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.8);
+}
+
+/* ── Quality Slider ──────────────────────────────────────────
+   accent-brand-500 is set via Tailwind; this polishes the
+   track appearance across browsers.                            */
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 99px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2f95f5;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 6px rgba(47, 149, 245, 0.4);
+  cursor: grab;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.15);
+  box-shadow: 0 2px 10px rgba(47, 149, 245, 0.55);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2f95f5;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 6px rgba(47, 149, 245, 0.4);
+  cursor: grab;
+}
+
+.dark input[type="range"]::-webkit-slider-thumb {
+  border-color: #1e293b; /* slate-800 */
+}
+
+.dark input[type="range"]::-moz-range-thumb {
+  border-color: #1e293b;
+}
+
+/* ── Gallery Section entrance animation ─────────────────────
+   Slides in when first revealed.                              */
+#gallerySection,
+#settingsSection,
+#actionSection {
+  animation: slideUp 220ms ease both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity:   0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+/* Prevent the animation re-firing when sections are already visible */
+#gallerySection.hidden,
+#settingsSection.hidden,
+#actionSection.hidden {
+  animation: none;
+}
+
+/* ── Focus Styles ────────────────────────────────────────────
+   Ensure keyboard navigation is clearly visible.              */
+:focus-visible {
+  outline: 2px solid #2f95f5;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
