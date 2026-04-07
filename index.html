@@ -11,18 +11,14 @@
   <meta name="description" content="Convert images to PDF instantly in your browser. Free, open-source, and 100% private — no uploads, no servers." />
   <title>ImgToPDF — Free Image to PDF Converter</title>
 
-  <!-- ─── Favicon (inline SVG data URI) ─── -->
   <link rel="icon" href="img/favicon.png" />
 
-  <!-- ─── Custom Styles ─── -->
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- ─── Tailwind CSS v4 Play CDN ─── -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <!-- ─── Tailwind Custom Theme / Utilities ─── -->
   <style type="text/tailwindcss">
-    @custom-variant dark (&:where(.dark, .dark *)); /* class-based dark mode */
+    @custom-variant dark (&:where(.dark, .dark *));
 
     @theme {
       --color-brand-50:  #f0f7ff;
@@ -51,7 +47,6 @@
   <header class="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
 
-      <!-- Logo + Title -->
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center shadow-md shadow-brand-500/30">
           <img src="img/apple-icon-180x180.png" alt="image logo">
@@ -62,21 +57,18 @@
         </div>
       </div>
 
-      <!-- Dark Mode Toggle -->
       <button
         id="darkToggle"
         aria-label="Toggle dark mode"
         title="Toggle dark mode"
         class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
       >
-        <!-- Sun icon (dark mode → switch to light) -->
         <svg id="iconSun" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
           <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
           <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
         </svg>
-        <!-- Moon icon (light mode → switch to dark) -->
         <svg id="iconMoon" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
@@ -88,7 +80,6 @@
   <!-- MAIN CONTENT -->
   <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-10 space-y-8">
 
-    <!-- ── Hero Tagline ── -->
     <div class="text-center space-y-2">
       <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
         Convert Images to PDF
@@ -108,7 +99,6 @@
         aria-label="Drop images here or click to browse files"
         class="relative flex flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-10 sm:p-16 cursor-pointer transition-all duration-200 select-none group"
       >
-        <!-- Upload Icon -->
         <div class="w-16 h-16 rounded-2xl bg-brand-50 dark:bg-brand-500/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
           <img src="img/logo.png" alt="imgtopdf logo">
         </div>
@@ -122,7 +112,6 @@
           <p class="text-xs text-slate-400 dark:text-slate-500">Supports JPEG · PNG · WebP &nbsp;|&nbsp; Multiple files are welcome</p>
         </div>
 
-        <!-- Hidden file input (triggered by click on drop zone) -->
         <input
           id="fileInput"
           type="file"
@@ -134,7 +123,6 @@
         />
       </div>
 
-      <!-- Upload error/warning messages -->
       <div id="uploadError" role="alert" aria-live="polite" class="hidden mt-3 px-4 py-2.5 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-red-600 dark:text-red-400 flex items-center gap-2">
         <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
@@ -143,10 +131,9 @@
       </div>
     </section>
 
-    <!-- IMAGE GALLERY (hidden until images are added) -->
+    <!-- IMAGE GALLERY -->
     <section id="gallerySection" aria-label="Uploaded images" class="hidden space-y-4">
 
-      <!-- Gallery Header -->
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
           <h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">Images</h3>
@@ -157,7 +144,6 @@
         </div>
         <div class="flex items-center gap-2">
           <p class="text-xs text-slate-400 dark:text-slate-500 hidden sm:block">Drag cards to reorder · order = page order in PDF</p>
-          <!-- Clear all button -->
           <button
             id="clearAllBtn"
             aria-label="Remove all images"
@@ -166,7 +152,6 @@
         </div>
       </div>
 
-      <!-- Sortable Image Grid -->
       <div
         id="imageGallery"
         class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
@@ -177,7 +162,7 @@
 
     </section>
 
-    <!-- SETTINGS PANEL (hidden until images are added) -->
+    <!-- SETTINGS PANEL -->
     <section id="settingsSection" aria-label="PDF settings" class="hidden">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 space-y-5">
 
@@ -185,7 +170,6 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
 
-          <!-- Page Size -->
           <div class="space-y-1.5">
             <label for="pageSizeSelect" class="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Page Size</label>
             <select
@@ -199,7 +183,6 @@
             </select>
           </div>
 
-          <!-- Orientation -->
           <div class="space-y-1.5">
             <span class="block text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Orientation</span>
             <div class="flex rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden" role="group" aria-label="Page orientation">
@@ -222,7 +205,6 @@
             </div>
           </div>
 
-          <!-- Image Quality -->
           <div class="space-y-1.5">
             <label for="qualitySlider" class="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">
               <span>Image Quality</span>
@@ -244,11 +226,10 @@
       </div>
     </section>
 
-    <!-- ACTION BAR (hidden until images are added) -->
+    <!-- ACTION BAR -->
     <section id="actionSection" aria-label="Convert actions" class="hidden">
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
 
-        <!-- Preview Button -->
         <button
           id="previewBtn"
           class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-brand-500 text-brand-600 dark:text-brand-400 font-semibold text-sm hover:bg-brand-50 dark:hover:bg-brand-500/10 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -260,13 +241,11 @@
           Preview PDF
         </button>
 
-        <!-- Convert & Download Button -->
         <button
           id="convertBtn"
           class="flex-1 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 active:bg-brand-700 text-white font-semibold text-sm shadow-lg shadow-brand-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Convert images and download PDF"
         >
-          <!-- Default download icon -->
           <svg id="convertIcon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
@@ -278,7 +257,6 @@
       </div>
     </section>
 
-    <!-- ── How It Works Info Cards ── -->
     <section aria-label="How it works" class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 space-y-2">
         <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center">
@@ -308,7 +286,7 @@
   <!-- FOOTER -->
   <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 dark:text-slate-500">
-      <p>© 2026 <strong class="text-slate-600 dark:text-slate-300">ImgToPDF</strong> — Open Source, MIT License</p>
+      <p>© 2026 <strong class="text-slate-600 dark:text-slate-300">ImgToPDF</strong>
       <div class="flex items-center gap-4">
         <a href="https://github.com/jmmaguigad/imgtopdf" target="_blank" rel="noopener noreferrer" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors flex items-center gap-1">
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12.003 12.003 0 0 0 24 12C24 5.37 18.63 0 12 0z"/></svg>
@@ -328,7 +306,6 @@
     aria-label="PDF Preview"
     class="hidden fixed inset-0 z-50 flex flex-col bg-slate-950/90 backdrop-blur-sm"
   >
-    <!-- Modal Header -->
     <div class="flex items-center justify-between px-4 sm:px-6 py-3 bg-slate-900 border-b border-slate-800 shrink-0">
       <div class="flex items-center gap-3">
         <div class="w-7 h-7 rounded-lg bg-brand-500/20 flex items-center justify-center">
@@ -340,7 +317,6 @@
         <span id="modalPageCount" class="text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full"></span>
       </div>
       <div class="flex items-center gap-2">
-        <!-- Download from modal -->
         <button
           id="modalDownloadBtn"
           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold transition-colors"
@@ -351,7 +327,6 @@
           </svg>
           Download
         </button>
-        <!-- Close modal (Escape key also works) -->
         <button
           id="modalCloseBtn"
           class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"
@@ -364,13 +339,11 @@
       </div>
     </div>
 
-    <!-- Spinner shown while PDF is generating for preview -->
     <div id="previewSpinner" class="hidden flex-1 flex flex-col items-center justify-center gap-4 text-slate-400">
       <span class="spinner w-10 h-10 border-4 border-slate-700 border-t-brand-500 rounded-full" aria-hidden="true"></span>
       <p class="text-sm">Generating preview…</p>
     </div>
 
-    <!-- PDF iframe -->
     <iframe
       id="pdfFrame"
       class="flex-1 w-full"
@@ -379,7 +352,6 @@
     ></iframe>
   </div>
 
-  <!-- ─── Application Script ─── -->
   <script src="https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.7/Sortable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>

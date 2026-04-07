@@ -45,21 +45,18 @@ a {
   box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.18);
 }
 
-/* Dark mode card hover */
 .dark .card-hover:hover {
   box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.55);
 }
 
 /* ── SortableJS States ── */
 
-/* The placeholder ghost card at the drop target */
 .sortable-ghost {
   opacity: 0.35;
   border: 2px dashed #2f95f5 !important;
   background-color: rgba(47, 149, 245, 0.06) !important;
 }
 
-/* The card being actively dragged */
 .sortable-drag {
   opacity: 0.95;
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.35) !important;
@@ -68,7 +65,6 @@ a {
   z-index: 999;
 }
 
-/* The chosen card (after mousedown, before drag starts) */
 .sortable-chosen {
   box-shadow: 0 4px 16px -4px rgba(47, 149, 245, 0.4) !important;
 }

@@ -108,11 +108,6 @@ function truncateName(name, maxLen = 22) {
   return base.slice(0, maxLen - ext.length - 1) + '…' + ext;
 }
 
-/**
- * Generates a lightweight unique ID.
- *
- * @returns {string}
- */
 function uid() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 }
@@ -133,7 +128,6 @@ function showUploadError(message) {
   setTimeout(() => hideUploadError(), 5000);
 }
 
-/** Hides the inline upload error message. */
 function hideUploadError() {
   uploadError.classList.add('hidden');
   uploadError.classList.remove('flex');
@@ -215,7 +209,6 @@ function renderGallery() {
     ].join(' ');
 
     card.innerHTML = `
-      <!-- Thumbnail -->
       <div class="aspect-[3/4] bg-slate-100 dark:bg-slate-800 overflow-hidden">
         <img
           src="${entry.objectURL}"
@@ -226,7 +219,6 @@ function renderGallery() {
         />
       </div>
 
-      <!-- Card Footer -->
       <div class="px-2.5 py-2 space-y-0.5">
         <p class="text-xs font-medium text-slate-700 dark:text-slate-200 leading-tight truncate" title="${entry.name}">
           ${truncateName(entry.name)}
@@ -234,7 +226,6 @@ function renderGallery() {
         <p class="text-xs text-slate-400 dark:text-slate-500">${entry.sizeLabel}</p>
       </div>
 
-      <!-- Delete Button -->
       <button
         class="delete-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-500 text-white
                flex items-center justify-center opacity-0 group-hover:opacity-100 focus:opacity-100
@@ -248,7 +239,6 @@ function renderGallery() {
         </svg>
       </button>
 
-      <!-- Drag Handle (bottom-left) -->
       <div class="absolute bottom-10 left-1.5 opacity-0 group-hover:opacity-60 transition-opacity pointer-events-none" aria-hidden="true">
         <svg class="w-4 h-4 text-slate-400 dark:text-slate-500" viewBox="0 0 24 24" fill="currentColor">
           <circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/>
@@ -308,10 +298,6 @@ const sortable = new Sortable(imageGallery, {
   delayOnTouchOnly: true,
   touchStartThreshold: 4,
 
-  /**
-   * Called when a drag-and-drop sort operation ends.
-   * Re-orders `state.images` to mirror the new DOM card order.
-   */
   onEnd() {
     const newOrder = Array.from(imageGallery.children).map((card) => card.dataset.id);
     state.images.sort((a, b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id));
@@ -431,7 +417,7 @@ async function compressImage(file, quality) {
     const compressed = await imageCompression(file, options);
     return compressed.size < file.size ? compressed : file;
   } catch {
-    return file; // fall back to original on error
+    return file;
   }
 }
 
@@ -509,7 +495,6 @@ async function generatePDF(forPreview = false) {
     const drawW = imgW * scale;
     const drawH = imgH * scale;
 
-    // Centre on page
     const x = MARGIN + (printW - drawW) / 2;
     const y = MARGIN + (printH - drawH) / 2;
 
@@ -566,11 +551,6 @@ function setConvertLoading(loading, label = 'Converting…') {
   convertBtnText.textContent   = loading ? label : 'Convert & Download';
 }
 
-/**
- * Sets the preview button into a loading state (spinner inside modal).
- *
- * @param {boolean} loading
- */
 function setPreviewLoading(loading) {
   previewBtn.disabled          = loading;
   convertBtn.disabled          = loading;
@@ -582,7 +562,6 @@ function setPreviewLoading(loading) {
 // PDF PREVIEW MODAL
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Opens the PDF preview modal and begins generating the PDF. */
 async function openPreview() {
   pdfModal.classList.remove('hidden');
   pdfModal.classList.add('flex');
@@ -608,7 +587,6 @@ async function openPreview() {
   }
 }
 
-/** Closes the PDF preview modal and cleans up the blob URL. */
 function closeModal() {
   pdfModal.classList.add('hidden');
   pdfModal.classList.remove('flex');
@@ -623,7 +601,6 @@ function closeModal() {
   setPreviewLoading(false);
 }
 
-/** Downloads the PDF directly from the current preview blob. */
 function downloadFromPreview() {
   if (!state.previewBlob) return;
   const a    = document.createElement('a');
