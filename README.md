@@ -1,7 +1,7 @@
 # ImgToPDF
 
 **A free, open-source, client-side Image to PDF converter.**  
-Convert JPEG, PNG, and WebP images to a polished PDF — entirely inside your browser. No uploads, no accounts, no data ever leaves your device.
+Convert JPEG, PNG, and WebP images to a polished PDF possible entirely inside your browser. No uploads, no accounts, no data ever leaves your device.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjmmaguigad%2Fimgtopdf)
