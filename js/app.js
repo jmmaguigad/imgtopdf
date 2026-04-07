@@ -472,7 +472,7 @@ async function generatePDF(forPreview = false) {
   const { pageSize, orientation, quality } = state;
   const { width: pageW, height: pageH }    = getPageDimensions(pageSize, orientation);
 
-  const MARGIN = 8; // mm on each side
+  const MARGIN = 0; // mm on each side
   const printW = pageW - MARGIN * 2;
   const printH = pageH - MARGIN * 2;
 
