@@ -25,7 +25,7 @@ Be respectful and constructive. Harassment or exclusionary behaviour is not welc
 
 Before opening an issue, please:
 
-1. Search [existing issues](https://github.com/your-username/imgtopdf/issues) to avoid duplicates.
+1. Search [existing issues](https://github.com/jmmaguigad/imgtopdf/issues) to avoid duplicates.
 2. Confirm you are using a supported browser (Chrome/Edge 90+, Firefox 90+, Safari 15+).
 
 **When opening a bug report, include:**
@@ -41,7 +41,7 @@ Before opening an issue, please:
 
 ## Suggesting Features
 
-Open a [Feature Request issue](https://github.com/your-username/imgtopdf/issues/new). Include:
+Open a [Feature Request issue](https://github.com/jmmaguigad/imgtopdf/issues/new). Include:
 
 - The problem you're trying to solve.
 - Your proposed solution.
@@ -56,7 +56,7 @@ This project has **no build step**. All you need is a modern browser and a text 
 ### 1. Fork and clone
 
 ```bash
-git clone https://github.com/your-username/imgtopdf.git
+git clone https://github.com/jmmaguigad/imgtopdf.git
 cd imgtopdf
 ```
 
