@@ -483,6 +483,7 @@ async function generatePDF(forPreview = false) {
   const MARGIN = 0; // mm on each side
   const printW = pageW - MARGIN * 2;
   const printH = pageH - MARGIN * 2;
+  const downloadFileSuffix = crypto.randomUUID().slice(0, 8);
 
   const doc = new jsPDF({
     orientation,
@@ -514,7 +515,7 @@ async function generatePDF(forPreview = false) {
     const blob = doc.output('blob');
     return URL.createObjectURL(blob);
   } else {
-    doc.save('converted.pdf');
+    doc.save(`converted-${downloadFileSuffix}.pdf`);
   }
 }
 
