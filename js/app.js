@@ -592,7 +592,9 @@ function setConvertLoading(loading, label = 'Converting…') {
   convertBtn.disabled    = loading;
   previewBtn.disabled    = loading;
   convertIcon.classList.toggle('hidden', loading);
-  convertSpinner.classList.toggle('hidden', !loading);
+  // Use style.display directly — avoids Tailwind v4 CSS layer specificity issue
+  // where unlayered .spinner overrides layered .hidden { display: none }.
+  convertSpinner.style.display = loading ? 'inline-block' : 'none';
   convertBtnText.textContent = loading ? label : 'Convert & Download';
 }
 
@@ -604,7 +606,8 @@ function setConvertLoading(loading, label = 'Converting…') {
 function setPreviewLoading(loading) {
   previewBtn.disabled    = loading;
   convertBtn.disabled    = loading;
-  previewSpinner.classList.toggle('hidden', !loading);
+  // Use style.display directly for the same reason as setConvertLoading above.
+  previewSpinner.style.display = loading ? 'flex' : 'none';
   pdfFrame.classList.toggle('hidden', loading);
 }
 
