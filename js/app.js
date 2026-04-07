@@ -1,5 +1,5 @@
 /**
- * @fileoverview ImgToPDF — Client-Side Image to PDF Converter
+ * @fileoverview ImgToPDF - Client-Side Image to PDF Converter
  * All processing runs in the browser; no data is sent to any server.
  * @author jmmaguigad
  * @version 1.0.0
@@ -16,11 +16,11 @@
  * Central application state.
  *
  * @typedef {Object} ImageEntry
- * @property {string} id        – Unique identifier (Date.now + random)
- * @property {File}   file      – Original File object
- * @property {string} objectURL – Blob URL created for the thumbnail preview
- * @property {string} name      – File display name (truncated internally)
- * @property {string} sizeLabel – Human-readable file size (e.g. "1.2 MB")
+ * @property {string} id        - Unique identifier (Date.now + random)
+ * @property {File}   file      - Original File object
+ * @property {string} objectURL - Blob URL created for the thumbnail preview
+ * @property {string} name      - File display name (truncated internally)
+ * @property {string} sizeLabel - Human-readable file size (e.g. "1.2 MB")
  *
  * @type {{
  *   images:      ImageEntry[],
@@ -85,7 +85,7 @@ const iconMoon        = document.getElementById('iconMoon');
 /**
  * Formats a byte count into a human-readable string.
  *
- * @param {number} bytes – File size in bytes.
+ * @param {number} bytes - File size in bytes.
  * @returns {string} e.g. "1.2 MB", "340 KB"
  */
 function formatFileSize(bytes) {
@@ -97,8 +97,8 @@ function formatFileSize(bytes) {
 /**
  * Truncates a filename for display while preserving the extension.
  *
- * @param {string} name    – Full filename.
- * @param {number} [maxLen=22] – Maximum character count.
+ * @param {string} name    - Full filename.
+ * @param {number} [maxLen=22] - Maximum character count.
  * @returns {string}
  */
 function truncateName(name, maxLen = 22) {
@@ -119,7 +119,7 @@ function uid() {
 /**
  * Shows an inline error message below the drop zone.
  *
- * @param {string} message – Error text to display.
+ * @param {string} message - Error text to display.
  */
 function showUploadError(message) {
   uploadErrorText.textContent = message;
@@ -144,7 +144,7 @@ const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
  * Validates, deduplicates, and adds image files to state.
  * Triggers gallery re-render after each batch.
  *
- * @param {FileList|File[]} files – Files to process.
+ * @param {FileList|File[]} files - Files to process.
  */
 function handleFiles(files) {
   hideUploadError();
@@ -263,7 +263,7 @@ function renderGallery() {
  * Removes a single image from state by its ID.
  * Revokes the associated Blob URL to free memory.
  *
- * @param {string} id – Image entry ID to remove.
+ * @param {string} id - Image entry ID to remove.
  */
 function removeImage(id) {
   const idx = state.images.findIndex((img) => img.id === id);
@@ -355,7 +355,7 @@ pageSizeSelect.addEventListener('change', () => {
  * Updates the orientation state and toggles the active visual state on the
  * portrait/landscape buttons.
  *
- * @param {'portrait'|'landscape'} value – New orientation.
+ * @param {'portrait'|'landscape'} value - New orientation.
  */
 function setOrientation(value) {
   state.orientation = value;
@@ -393,12 +393,12 @@ qualitySlider.addEventListener('input', () => {
 
 /**
  * Compresses a single image file using browser-image-compression.
- * The quality percentage (10–100) maps to a maxSizeMB target:
+ * The quality percentage (10-100) maps to a maxSizeMB target:
  *   100% → no meaningful compression (10 MB cap)
  *   10%  → aggressive compression (0.05 MB cap)
  *
- * @param {File}   file    – The image file to compress.
- * @param {number} quality – Quality value from 1 to 100.
+ * @param {File}   file    - The image file to compress.
+ * @param {number} quality - Quality value from 1 to 100.
  * @returns {Promise<File>} The compressed (or original, if smaller) file.
  */
 async function compressImage(file, quality) {
@@ -428,7 +428,7 @@ async function compressImage(file, quality) {
 /**
  * Returns the print dimensions (in mm) for a given page size and orientation.
  *
- * @param {string} sizeKey    – One of: 'a4', 'a3', 'letter', 'legal'
+ * @param {string} sizeKey    - One of: 'a4', 'a3', 'letter', 'legal'
  * @param {'portrait'|'landscape'} orientation
  * @returns {{ width: number, height: number }} Dimensions in millimetres.
  */
@@ -458,7 +458,7 @@ function getPageDimensions(sizeKey, orientation) {
  *  3. Letterbox-scaled to fit the page without cropping.
  *  4. Centred on the page.
  *
- * @param {boolean} [forPreview=false] – If true, returns a Blob URL instead
+ * @param {boolean} [forPreview=false] - If true, returns a Blob URL instead
  *   of triggering a download. The caller is responsible for revoking the URL.
  * @returns {Promise<string|void>} Blob URL when `forPreview` is true, else void.
  * @throws {Error} If no images are loaded or PDF generation fails.
@@ -514,7 +514,7 @@ async function generatePDF(forPreview = false) {
  * Loads a File as an `<img>` element to read its natural pixel dimensions,
  * and converts it to a data URL for jsPDF.
  *
- * @param {File|Blob} file – Image file to load.
+ * @param {File|Blob} file - Image file to load.
  * @returns {Promise<{ imgW: number, imgH: number, dataURL: string }>}
  */
 function loadImageMeta(file) {
@@ -540,7 +540,7 @@ function loadImageMeta(file) {
  * Sets the convert button into a loading state (spinner + disabled).
  *
  * @param {boolean} loading
- * @param {string}  [label='Converting…'] – Text to show while loading.
+ * @param {string}  [label='Converting…'] - Text to show while loading.
  */
 function setConvertLoading(loading, label = 'Converting…') {
   convertBtn.disabled    = loading;
