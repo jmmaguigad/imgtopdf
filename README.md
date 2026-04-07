@@ -7,7 +7,7 @@ Convert JPEG, PNG, and WebP images to a polished PDF — entirely inside your br
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjmmaguigad%2Fimgtopdf)
 [![Contributions welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-> **Live Demo:** [https://imgtopdf-smoky.vercel.app](https://imgtopdf-smoky.vercel.app) *(update with your URL)*
+> **Live Demo:** [https://jmmaguigad-imgtopdf.vercel.app/](https://jmmaguigad-imgtopdf.vercel.app/) *(update with your URL)*
 
 ---
 
