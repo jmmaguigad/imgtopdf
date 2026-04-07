@@ -1,14 +1,7 @@
 /**
  * @fileoverview ImgToPDF — Client-Side Image to PDF Converter
- *
- * All conversion logic runs entirely in the user's browser.
- * No data is sent to any server.
- *
- * Dependencies (loaded via CDN in index.html):
- *   - jsPDF v4.2.1         – PDF generation
- *   - SortableJS v1.15.7   – Drag-to-reorder gallery
- *   - browser-image-compression v2.0.2 – Client-side quality control
- *
+ * All processing runs in the browser; no data is sent to any server.
+ * @author jmmaguigad
  * @version 1.0.0
  * @license MIT
  */
@@ -206,18 +199,12 @@ function handleFiles(files) {
 function renderGallery() {
   const hasImages = state.images.length > 0;
 
-  // Show/hide dependent sections
   gallerySection.classList.toggle('hidden', !hasImages);
   settingsSection.classList.toggle('hidden', !hasImages);
   actionSection.classList.toggle('hidden', !hasImages);
-
-  // Update image count badge
   imageCount.textContent = state.images.length;
-
-  // Clear existing cards
   imageGallery.innerHTML = '';
 
-  // Render each image card
   state.images.forEach((entry) => {
     const card = document.createElement('div');
     card.dataset.id = entry.id;
@@ -274,7 +261,6 @@ function renderGallery() {
     imageGallery.appendChild(card);
   });
 
-  // Attach delete handlers to all newly created delete buttons
   imageGallery.querySelectorAll('.delete-btn').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -336,14 +322,12 @@ const sortable = new Sortable(imageGallery, {
 // DROP ZONE EVENTS
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Prevent browser from opening the file on dragover
 dropZone.addEventListener('dragover', (e) => {
   e.preventDefault();
   dropZone.classList.add('drag-over');
 });
 
 dropZone.addEventListener('dragleave', (e) => {
-  // Only remove highlight when leaving the drop zone itself (not a child)
   if (!dropZone.contains(e.relatedTarget)) {
     dropZone.classList.remove('drag-over');
   }
@@ -357,7 +341,6 @@ dropZone.addEventListener('drop', (e) => {
   }
 });
 
-// Keyboard accessibility: activate drop zone with Enter or Space
 dropZone.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
@@ -365,16 +348,13 @@ dropZone.addEventListener('keydown', (e) => {
   }
 });
 
-// File picker
 fileInput.addEventListener('change', () => {
   if (fileInput.files?.length) {
     handleFiles(fileInput.files);
-    // Reset so the same file can be re-added after removal
-    fileInput.value = '';
+    fileInput.value = ''; // reset so the same file can be re-added
   }
 });
 
-// Clear all
 clearAllBtn.addEventListener('click', clearAll);
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -436,26 +416,22 @@ qualitySlider.addEventListener('input', () => {
  * @returns {Promise<File>} The compressed (or original, if smaller) file.
  */
 async function compressImage(file, quality) {
-  // Map quality % to a maxSizeMB value (exponential scale feels more natural)
+  // Exponential curve: 10% → 0.05 MB cap, 100% → 10 MB cap
   const maxSizeMB = 0.05 + ((quality / 100) ** 1.8) * 9.95;
 
   const options = {
     maxSizeMB,
     maxWidthOrHeight: 4096,
     useWebWorker:     true,
-    // Preserve the original MIME type
-    fileType: file.type,
-    // Do not upscale images
+    fileType:         file.type,
     alwaysKeepResolution: false,
   };
 
   try {
     const compressed = await imageCompression(file, options);
-    // Only use the compressed version if it's actually smaller
     return compressed.size < file.size ? compressed : file;
   } catch {
-    // On failure, fall back to the original uncompressed file
-    return file;
+    return file; // fall back to original on error
   }
 }
 
@@ -502,18 +478,15 @@ function getPageDimensions(sizeKey, orientation) {
  * @throws {Error} If no images are loaded or PDF generation fails.
  */
 async function generatePDF(forPreview = false) {
-  if (state.images.length === 0) {
-    throw new Error('No images to convert.');
-  }
+  if (state.images.length === 0) throw new Error('No images to convert.');
 
-  // jsPDF v4 UMD exposes window.jspdf (lowercase namespace)
+  // jsPDF v4 UMD: global is window.jspdf (lowercase), not window.jsPDF
   const { jsPDF } = window.jspdf;
 
   const { pageSize, orientation, quality } = state;
   const { width: pageW, height: pageH }    = getPageDimensions(pageSize, orientation);
 
-  // Margin in mm on each side
-  const MARGIN = 8;
+  const MARGIN = 8; // mm on each side
   const printW = pageW - MARGIN * 2;
   const printH = pageH - MARGIN * 2;
 
@@ -526,21 +499,17 @@ async function generatePDF(forPreview = false) {
   for (let i = 0; i < state.images.length; i++) {
     const entry = state.images[i];
 
-    // Add a new page for every image after the first
     if (i > 0) doc.addPage(pageSize, orientation);
 
-    // Step 1 – Compress
-    const compressedFile = await compressImage(entry.file, quality);
+    const compressedFile           = await compressImage(entry.file, quality);
+    const { imgW, imgH, dataURL }  = await loadImageMeta(compressedFile);
 
-    // Step 2 – Load image to measure natural pixel dimensions
-    const { imgW, imgH, dataURL } = await loadImageMeta(compressedFile);
-
-    // Step 3 – Letterbox scale: fit within printable area, preserve aspect ratio
-    const scale = Math.min(printW / imgW, printH / imgH, 1); // never upscale
+    // Letterbox: scale to fit print area, never upscale
+    const scale = Math.min(printW / imgW, printH / imgH, 1);
     const drawW = imgW * scale;
     const drawH = imgH * scale;
 
-    // Step 4 – Centre on the page
+    // Centre on page
     const x = MARGIN + (printW - drawW) / 2;
     const y = MARGIN + (printH - drawH) / 2;
 
@@ -592,10 +561,9 @@ function setConvertLoading(loading, label = 'Converting…') {
   convertBtn.disabled    = loading;
   previewBtn.disabled    = loading;
   convertIcon.classList.toggle('hidden', loading);
-  // Use style.display directly — avoids Tailwind v4 CSS layer specificity issue
-  // where unlayered .spinner overrides layered .hidden { display: none }.
+  // style.display avoids Tailwind v4 layer specificity bug (.spinner beats .hidden)
   convertSpinner.style.display = loading ? 'inline-block' : 'none';
-  convertBtnText.textContent = loading ? label : 'Convert & Download';
+  convertBtnText.textContent   = loading ? label : 'Convert & Download';
 }
 
 /**
@@ -604,10 +572,9 @@ function setConvertLoading(loading, label = 'Converting…') {
  * @param {boolean} loading
  */
 function setPreviewLoading(loading) {
-  previewBtn.disabled    = loading;
-  convertBtn.disabled    = loading;
-  // Use style.display directly for the same reason as setConvertLoading above.
-  previewSpinner.style.display = loading ? 'flex' : 'none';
+  previewBtn.disabled          = loading;
+  convertBtn.disabled          = loading;
+  previewSpinner.style.display = loading ? 'flex' : 'none'; // same Tailwind v4 fix
   pdfFrame.classList.toggle('hidden', loading);
 }
 
@@ -617,14 +584,12 @@ function setPreviewLoading(loading) {
 
 /** Opens the PDF preview modal and begins generating the PDF. */
 async function openPreview() {
-  // Show modal immediately with spinner
   pdfModal.classList.remove('hidden');
   pdfModal.classList.add('flex');
-  document.body.style.overflow = 'hidden'; // prevent background scroll
+  document.body.style.overflow = 'hidden';
   setPreviewLoading(true);
   modalPageCount.textContent = '';
 
-  // Revoke any previous preview blob to free memory
   if (state.previewBlob) {
     URL.revokeObjectURL(state.previewBlob);
     state.previewBlob = null;
@@ -655,7 +620,6 @@ function closeModal() {
     state.previewBlob = null;
   }
 
-  // Re-enable action buttons
   setPreviewLoading(false);
 }
 
@@ -668,22 +632,13 @@ function downloadFromPreview() {
   a.click();
 }
 
-// Modal button events
 previewBtn.addEventListener('click', openPreview);
 modalCloseBtn.addEventListener('click', closeModal);
 modalDownloadBtn.addEventListener('click', downloadFromPreview);
-
-// Close modal on Escape key
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && !pdfModal.classList.contains('hidden')) {
-    closeModal();
-  }
+  if (e.key === 'Escape' && !pdfModal.classList.contains('hidden')) closeModal();
 });
-
-// Close modal when clicking the dark backdrop (outside modal content)
-pdfModal.addEventListener('click', (e) => {
-  if (e.target === pdfModal) closeModal();
-});
+pdfModal.addEventListener('click', (e) => { if (e.target === pdfModal) closeModal(); });
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CONVERT & DOWNLOAD
@@ -716,11 +671,7 @@ function applyTheme(theme) {
   document.documentElement.classList.toggle('dark', isDark);
   iconSun.classList.toggle('hidden',  !isDark);
   iconMoon.classList.toggle('hidden', isDark);
-  try {
-    localStorage.setItem('imgtopdf-theme', theme);
-  } catch {
-    // localStorage may be unavailable in some private browsing contexts
-  }
+  try { localStorage.setItem('imgtopdf-theme', theme); } catch { /* private mode */ }
 }
 
 darkToggle.addEventListener('click', () => {
@@ -732,16 +683,8 @@ darkToggle.addEventListener('click', () => {
 // INITIALISATION
 // ─────────────────────────────────────────────────────────────────────────────
 
-/**
- * Entry point — runs once on DOM load.
- * Restores saved theme preference.
- */
 (function init() {
   let savedTheme = 'light';
-  try {
-    savedTheme = localStorage.getItem('imgtopdf-theme') ?? 'light';
-  } catch {
-    // Ignore localStorage errors
-  }
+  try { savedTheme = localStorage.getItem('imgtopdf-theme') ?? 'light'; } catch { /* ignore */ }
   applyTheme(savedTheme);
 })();

@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <!--
   ImgToPDF — Client-Side Image to PDF Converter
-  ==============================================
-  A fully client-side, privacy-first tool that converts images to PDF in
-  the browser. No data is ever uploaded to a server.
-
-  Author:  jmmaguigad
-  License: MIT
-  Repo:    https://github.com/jmmaguigad/imgtopdf
+  Author: jmmaguigad | License: MIT
+  https://github.com/jmmaguigad/imgtopdf
 -->
 <html lang="en" class="scroll-smooth">
 <head>
@@ -27,12 +22,7 @@
 
   <!-- ─── Tailwind Custom Theme / Utilities ─── -->
   <style type="text/tailwindcss">
-    /*
-     * Enable class-based dark mode in Tailwind v4.
-     * This makes dark: variants activate when .dark is on <html>,
-     * instead of the default @media (prefers-color-scheme: dark).
-     */
-    @custom-variant dark (&:where(.dark, .dark *));
+    @custom-variant dark (&:where(.dark, .dark *)); /* class-based dark mode */
 
     @theme {
       --color-brand-50:  #f0f7ff;
@@ -55,12 +45,9 @@
   </style>
 </head>
 
-<!-- ─── Dark mode: class applied to <html> via JS on load ─── -->
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 font-sans antialiased">
 
-  <!-- ════════════════════════════════════════════════════════════
-       HEADER
-       ════════════════════════════════════════════════════════════ -->
+  <!-- HEADER -->
   <header class="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
 
@@ -82,14 +69,14 @@
         title="Toggle dark mode"
         class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
       >
-        <!-- Sun icon (visible in dark mode → switch to light) -->
+        <!-- Sun icon (dark mode → switch to light) -->
         <svg id="iconSun" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
           <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
           <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
         </svg>
-        <!-- Moon icon (visible in light mode → switch to dark) -->
+        <!-- Moon icon (light mode → switch to dark) -->
         <svg id="iconMoon" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
@@ -98,9 +85,7 @@
     </div>
   </header>
 
-  <!-- ════════════════════════════════════════════════════════════
-       MAIN CONTENT
-       ════════════════════════════════════════════════════════════ -->
+  <!-- MAIN CONTENT -->
   <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-10 space-y-8">
 
     <!-- ── Hero Tagline ── -->
@@ -114,9 +99,7 @@
       </p>
     </div>
 
-    <!-- ════════════════════════════════════════════════════════
-         UPLOAD ZONE
-         ════════════════════════════════════════════════════════ -->
+    <!-- UPLOAD ZONE -->
     <section aria-label="Image upload area">
       <div
         id="dropZone"
@@ -160,9 +143,7 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         IMAGE GALLERY (hidden until images are added)
-         ════════════════════════════════════════════════════════ -->
+    <!-- IMAGE GALLERY (hidden until images are added) -->
     <section id="gallerySection" aria-label="Uploaded images" class="hidden space-y-4">
 
       <!-- Gallery Header -->
@@ -196,9 +177,7 @@
 
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         SETTINGS PANEL (hidden until images are added)
-         ════════════════════════════════════════════════════════ -->
+    <!-- SETTINGS PANEL (hidden until images are added) -->
     <section id="settingsSection" aria-label="PDF settings" class="hidden">
       <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 space-y-5">
 
@@ -265,9 +244,7 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         ACTION BAR (hidden until images are added)
-         ════════════════════════════════════════════════════════ -->
+    <!-- ACTION BAR (hidden until images are added) -->
     <section id="actionSection" aria-label="Convert actions" class="hidden">
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
 
@@ -289,12 +266,11 @@
           class="flex-1 inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 active:bg-brand-700 text-white font-semibold text-sm shadow-lg shadow-brand-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Convert images and download PDF"
         >
-          <!-- Default icon -->
+          <!-- Default download icon -->
           <svg id="convertIcon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
-          <!-- Loading spinner (hidden by default) -->
           <span id="convertSpinner" class="hidden spinner w-4 h-4 border-2 border-white/30 border-t-white rounded-full" aria-hidden="true"></span>
           <span id="convertBtnText">Convert &amp; Download</span>
         </button>
@@ -329,9 +305,7 @@
 
   </main>
 
-  <!-- ════════════════════════════════════════════════════════════
-       FOOTER
-       ════════════════════════════════════════════════════════════ -->
+  <!-- FOOTER -->
   <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 dark:text-slate-500">
       <p>© 2026 <strong class="text-slate-600 dark:text-slate-300">ImgToPDF</strong> — Open Source, MIT License</p>
@@ -346,9 +320,7 @@
     </div>
   </footer>
 
-  <!-- ════════════════════════════════════════════════════════════
-       PDF PREVIEW MODAL
-       ════════════════════════════════════════════════════════════ -->
+  <!-- PDF PREVIEW MODAL -->
   <div
     id="pdfModal"
     role="dialog"
@@ -379,7 +351,7 @@
           </svg>
           Download
         </button>
-        <!-- Close modal (also closes on Escape key) -->
+        <!-- Close modal (Escape key also works) -->
         <button
           id="modalCloseBtn"
           class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-colors"

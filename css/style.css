@@ -1,12 +1,8 @@
-/* ============================================================
-   ImgToPDF — Custom Styles
-   Complements Tailwind CSS v4 Play CDN.
-   Handles: animations, transitions, SortableJS states,
-            scrollbar styling, spinner, modal backdrop.
-   ============================================================ */
+/* ImgToPDF — Custom Styles
+   Complements Tailwind CSS v4. Handles animations, SortableJS states,
+   scrollbar, spinner, and modal backdrop. */
 
-/* ── Smooth dark-mode transitions ────────────────────────────
-   Applied globally so colour changes animate instead of snap.  */
+/* ── Smooth dark-mode transitions ── */
 *,
 *::before,
 *::after {
@@ -15,8 +11,7 @@
   transition-timing-function: ease;
 }
 
-/* Exclude interactive elements from the blanket colour transition
-   so hover/focus feedback remains snappy.                       */
+/* Exclude interactive elements so hover/focus feedback remains snappy. */
 button,
 input,
 select,
@@ -25,11 +20,9 @@ a {
   transition-duration: 150ms;
 }
 
-/* ── Loading Spinner ─────────────────────────────────────────
-   Used on the convert button and the preview modal overlay.    */
+/* ── Loading Spinner ── */
 .spinner {
-  /* display is managed via JS style.display to avoid Tailwind v4 layer
-     specificity conflict (unlayered rules beat layered .hidden utility). */
+  /* display managed via JS style.display — avoids Tailwind v4 layer specificity conflict. */
   animation: spin 0.7s linear infinite;
 }
 
@@ -37,10 +30,7 @@ a {
   to { transform: rotate(360deg); }
 }
 
-/* ── Drop Zone: drag-over state animation ────────────────────
-   The 'drag-over' class is toggled by JS on dragover/dragleave.
-   The Tailwind @layer utility in index.html sets the colours;
-   this adds a pulsing border glow effect.                      */
+/* ── Drop Zone drag-over state ── */
 #dropZone {
   transition: transform 180ms ease, border-color 180ms ease,
               background-color 180ms ease, box-shadow 180ms ease;
@@ -50,9 +40,7 @@ a {
   box-shadow: 0 0 0 4px rgba(47, 149, 245, 0.25);
 }
 
-/* ── Image Cards ─────────────────────────────────────────────
-   card-hover utility is defined in Tailwind @layer.
-   This extends it with a subtle box-shadow lift.               */
+/* ── Image Cards ── */
 .card-hover:hover {
   box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.18);
 }
@@ -62,10 +50,9 @@ a {
   box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.55);
 }
 
-/* ── SortableJS States ───────────────────────────────────────
-   Classes injected by SortableJS during drag operations.       */
+/* ── SortableJS States ── */
 
-/* The placeholder "ghost" card shown at the drop target */
+/* The placeholder ghost card at the drop target */
 .sortable-ghost {
   opacity: 0.35;
   border: 2px dashed #2f95f5 !important;
@@ -86,9 +73,7 @@ a {
   box-shadow: 0 4px 16px -4px rgba(47, 149, 245, 0.4) !important;
 }
 
-/* ── PDF Preview Modal Backdrop ──────────────────────────────
-   The modal #pdfModal uses Tailwind classes for most styling;
-   this adds a fade-in animation for the backdrop.              */
+/* ── PDF Preview Modal Backdrop ── */
 #pdfModal {
   animation: fadeIn 180ms ease;
 }
@@ -102,8 +87,7 @@ a {
   to   { opacity: 1; }
 }
 
-/* ── Custom Scrollbar (WebKit) ───────────────────────────────
-   Subtle scrollbar to match the design language.               */
+/* ── Custom Scrollbar (WebKit) ── */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -132,9 +116,7 @@ a {
   background-color: rgba(100, 116, 139, 0.8);
 }
 
-/* ── Quality Slider ──────────────────────────────────────────
-   accent-brand-500 is set via Tailwind; this polishes the
-   track appearance across browsers.                            */
+/* ── Quality Slider ── */
 input[type="range"] {
   appearance: none;
   -webkit-appearance: none;
@@ -180,8 +162,7 @@ input[type="range"]::-moz-range-thumb {
   border-color: #1e293b;
 }
 
-/* ── Gallery Section entrance animation ─────────────────────
-   Slides in when first revealed.                              */
+/* ── Gallery, Settings, Action entrance animation ── */
 #gallerySection,
 #settingsSection,
 #actionSection {
@@ -199,15 +180,14 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Prevent the animation re-firing when sections are already visible */
+/* Prevent re-firing when sections return to hidden */
 #gallerySection.hidden,
 #settingsSection.hidden,
 #actionSection.hidden {
   animation: none;
 }
 
-/* ── Focus Styles ────────────────────────────────────────────
-   Ensure keyboard navigation is clearly visible.              */
+/* ── Focus Styles ── */
 :focus-visible {
   outline: 2px solid #2f95f5;
   outline-offset: 3px;
