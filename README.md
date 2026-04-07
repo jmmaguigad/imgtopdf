@@ -4,10 +4,10 @@
 Convert JPEG, PNG, and WebP images to a polished PDF — entirely inside your browser. No uploads, no accounts, no data ever leaves your device.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyour-username%2Fimgtopdf)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjmmaguigad%2Fimgtopdf)
 [![Contributions welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-> **Live Demo:** [https://imgtopdf.vercel.app](https://imgtopdf.vercel.app) *(update with your URL)*
+> **Live Demo:** [https://imgtopdf-smoky.vercel.app](https://imgtopdf-smoky.vercel.app) *(update with your URL)*
 
 ---
 
@@ -43,7 +43,7 @@ Convert JPEG, PNG, and WebP images to a polished PDF — entirely inside your br
 ### Option 1 — Open directly in a browser
 
 ```
-git clone https://github.com/your-username/imgtopdf.git
+git clone https://github.com/jmmaguigad/imgtopdf.git
 cd imgtopdf
 # Just open index.html in any modern browser
 open index.html         # macOS
