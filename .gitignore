@@ -42,3 +42,6 @@ out/
 
 # ── Vercel ────────────────────────────────────────────────────
 .vercel
+
+# ── Internal docs (not for public repo) ──────────────────────
+SOURCECODE.md
