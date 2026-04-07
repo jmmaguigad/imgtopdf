@@ -514,7 +514,7 @@ async function generatePDF(forPreview = false) {
     const blob = doc.output('blob');
     return URL.createObjectURL(blob);
   } else {
-    doc.save('converted.pdf'+uid);
+    doc.save('converted.pdf');
   }
 }
 
@@ -613,7 +613,7 @@ function downloadFromPreview() {
   if (!state.previewBlob) return;
   const a    = document.createElement('a');
   a.href     = state.previewBlob;
-  a.download = 'converted.pdf'+uid;
+  a.download = 'converted.pdf';
   a.click();
 }
 
