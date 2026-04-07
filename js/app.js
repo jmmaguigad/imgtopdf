@@ -112,6 +112,14 @@ function uid() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // UPLOAD ERROR DISPLAY
 // ─────────────────────────────────────────────────────────────────────────────
@@ -212,7 +220,7 @@ function renderGallery() {
       <div class="aspect-[3/4] bg-slate-100 dark:bg-slate-800 overflow-hidden">
         <img
           src="${entry.objectURL}"
-          alt="${entry.name}"
+          alt="${escapeHtml(entry.name)}"
           class="w-full h-full object-contain"
           loading="lazy"
           draggable="false"
@@ -220,8 +228,8 @@ function renderGallery() {
       </div>
 
       <div class="px-2.5 py-2 space-y-0.5">
-        <p class="text-xs font-medium text-slate-700 dark:text-slate-200 leading-tight truncate" title="${entry.name}">
-          ${truncateName(entry.name)}
+        <p class="text-xs font-medium text-slate-700 dark:text-slate-200 leading-tight truncate" title="${escapeHtml(entry.name)}">
+          ${escapeHtml(truncateName(entry.name))}
         </p>
         <p class="text-xs text-slate-400 dark:text-slate-500">${entry.sizeLabel}</p>
       </div>
@@ -231,7 +239,7 @@ function renderGallery() {
                flex items-center justify-center opacity-0 group-hover:opacity-100 focus:opacity-100
                transition-opacity hover:bg-red-600 shadow-md"
         data-id="${entry.id}"
-        aria-label="Remove ${entry.name}"
+        aria-label="Remove ${escapeHtml(entry.name)}"
         title="Remove image"
       >
         <svg class="w-3 h-3 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -289,7 +297,7 @@ function clearAll() {
  * When the user finishes dragging, `state.images` is reordered to match the
  * new DOM order so the PDF page sequence stays in sync.
  */
-const sortable = new Sortable(imageGallery, {
+new Sortable(imageGallery, {
   animation:     200,
   ghostClass:    'sortable-ghost',
   chosenClass:   'sortable-chosen',
@@ -337,7 +345,7 @@ dropZone.addEventListener('keydown', (e) => {
 fileInput.addEventListener('change', () => {
   if (fileInput.files?.length) {
     handleFiles(fileInput.files);
-    fileInput.value = ''; // reset so the same file can be re-added
+    fileInput.value = '';
   }
 });
 
